@@ -4623,7 +4623,19 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                     })
                 }
 
-                
+                Device (PXSX)
+                {
+                    Name (_ADR, Zero)  // _ADR: Address
+                    Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
+                    {
+                        Return (GPRW (0x09, 0x04))
+                    }
+
+                    Method (_RMV, 0, NotSerialized)  // _RMV: Removal Status
+                    {
+                        Return (HPCE)
+                    }
+                }
 
                 Method (_REG, 2, NotSerialized)  // _REG: Region Availability
                 {
@@ -4679,19 +4691,6 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                     }
 
                     Return (PR06 ())
-                }
-                Device (LAN0)
-                {
-                    Name (_ADR, Zero)
-                    Method (_DSM, 4, NotSerialized)
-                    {
-                        Store (Package (0x04) {
-                            "built-in", Buffer (One) {0x01},
-                            "location", Buffer (0x02) {"1"}
-                        }, Local0)
-                        DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))
-                        Return (Local0)
-                    }
                 }
             }
 
