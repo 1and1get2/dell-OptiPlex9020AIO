@@ -37,9 +37,9 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
      * because the disassembler had to guess at the number of arguments
      * required for each:
      */
-    External (_SB_.PCI0.IGPU.IDAB, MethodObj)    // Warning: Unresolved method, guessing 0 arguments
-
+    
     External (_SB_.PCI0.IGPU, DeviceObj)
+    External (_SB_.PCI0.IGPU.IDAB, MethodObj)    // Warning: Unresolved method, guessing 0 arguments
     External (_SB_.PCI0.IGPU.AINT, MethodObj)    // 2 Arguments
     External (_SB_.PCI0.LPCB.H_EC.LSTE, IntObj)
     External (_SB_.PCI0.PEG0.PEGP, DeviceObj)
