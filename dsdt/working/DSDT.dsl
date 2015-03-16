@@ -57,11 +57,11 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
     External (_SB_.IAOE.WKRS, UnknownObj)
     External (_SB_.IETM, UnknownObj)
     External (_SB_.PCCD.PENB, UnknownObj)
-    External (_SB_.PCI0.GFX0.CLID, FieldUnitObj)
-    External (_SB_.PCI0.GFX0.DD1F, UnknownObj)
-    External (_SB_.PCI0.GFX0.IUEH, MethodObj)    // 1 Arguments
-    External (_SB_.PCI0.GFX0.STAT, FieldUnitObj)
-    External (_SB_.PCI0.GFX0.TCHE, FieldUnitObj)
+    External (_SB_.PCI0.IGPU.CLID, FieldUnitObj)
+    External (_SB_.PCI0.IGPU.DD1F, UnknownObj)
+    External (_SB_.PCI0.IGPU.IUEH, MethodObj)    // 1 Arguments
+    External (_SB_.PCI0.IGPU.STAT, FieldUnitObj)
+    External (_SB_.PCI0.IGPU.TCHE, FieldUnitObj)
     External (DIDX, FieldUnitObj)
     External (MDBG, IntObj)
     External (PDC0, IntObj)
@@ -10133,18 +10133,18 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
 
         If (And (ICNF, 0x10))
         {
-            If (And (\_SB.PCI0.GFX0.TCHE, 0x0100))
+            If (And (\_SB.PCI0.IGPU.TCHE, 0x0100))
             {
                 If (LEqual (\_SB.IAOE.ITMR, One))
                 {
                     If (LAnd (And (\_SB.IAOE.IBT1, One), LOr (And (\_SB.IAOE.WKRS, 0x02
                         ), And (\_SB.IAOE.WKRS, 0x10))))
                     {
-                        Store (Or (And (\_SB.PCI0.GFX0.STAT, 0xFFFFFFFFFFFFFFFC), One), \_SB.PCI0.GFX0.STAT)
+                        Store (Or (And (\_SB.PCI0.IGPU.STAT, 0xFFFFFFFFFFFFFFFC), One), \_SB.PCI0.IGPU.STAT)
                     }
                     Else
                     {
-                        Store (And (\_SB.PCI0.GFX0.STAT, 0xFFFFFFFFFFFFFFFC), \_SB.PCI0.GFX0.STAT)
+                        Store (And (\_SB.PCI0.IGPU.STAT, 0xFFFFFFFFFFFFFFFC), \_SB.PCI0.IGPU.STAT)
                     }
                 }
                 Else
@@ -10156,11 +10156,11 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                             If (LAnd (And (\_SB.PCI0.LPCB.H_EC.ECRD (RefOf (\_SB.PCI0.LPCB.H_EC.IBT1)), One), LOr (And (
                                 \_SB.IAOE.WKRS, 0x02), And (\_SB.IAOE.WKRS, 0x10))))
                             {
-                                Store (Or (And (\_SB.PCI0.GFX0.STAT, 0xFFFFFFFFFFFFFFFC), One), \_SB.PCI0.GFX0.STAT)
+                                Store (Or (And (\_SB.PCI0.IGPU.STAT, 0xFFFFFFFFFFFFFFFC), One), \_SB.PCI0.IGPU.STAT)
                             }
                             Else
                             {
-                                Store (And (\_SB.PCI0.GFX0.STAT, 0xFFFFFFFFFFFFFFFC), \_SB.PCI0.GFX0.STAT)
+                                Store (And (\_SB.PCI0.IGPU.STAT, 0xFFFFFFFFFFFFFFFC), \_SB.PCI0.IGPU.STAT)
                             }
                         }
                     }
@@ -10214,12 +10214,12 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
 
             If (And (GBSX, 0x40))
             {
-                \_SB.PCI0.GFX0.IUEH (0x06)
+                \_SB.PCI0.IGPU.IUEH (0x06)
             }
 
             If (And (GBSX, 0x80))
             {
-                \_SB.PCI0.GFX0.IUEH (0x07)
+                \_SB.PCI0.IGPU.IUEH (0x07)
             }
 
             If (LAnd (DTSE, LGreater (TCNT, One)))
@@ -10776,7 +10776,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                 0x02, 
                 Package (0x01)
                 {
-                    "\\_SB.PCI0.GFX0"
+                    "\\_SB.PCI0.IGPU"
                 }, 
 
                 Package (0x01)
@@ -10788,7 +10788,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
             {
                 Package (0x02)
                 {
-                    "\\_SB.PCI0.GFX0", 
+                    "\\_SB.PCI0.IGPU", 
                     0xFFFFFFFF
                 }, 
 
@@ -10898,7 +10898,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
 
                 Package (0x03)
                 {
-                    "\\_SB.PCI0.GFX0", 
+                    "\\_SB.PCI0.IGPU", 
                     One, 
                     Package (0x02)
                     {
@@ -11301,7 +11301,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                                         One, 
                                         Package (0x01)
                                         {
-                                            "\\_SB.PCI0.GFX0"
+                                            "\\_SB.PCI0.IGPU"
                                         }
                                     })
                                 }
@@ -11608,7 +11608,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
     {
         If (LEqual (And (DIDX, 0x0F00), 0x0400))
         {
-            Notify (\_SB.PCI0.GFX0.DD1F, Arg0)
+            Notify (\_SB.PCI0.IGPU.DD1F, Arg0)
         }
     }
 
@@ -12472,13 +12472,13 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                 {
                     If (LEqual (Arg2, 0xD0))
                     {
-                        Notify (\_SB.PCI0.GFX0.DD1F, 0x86)
+                        Notify (\_SB.PCI0.IGPU.DD1F, 0x86)
                     }
                     Else
                     {
                         If (LEqual (Arg2, 0xE0))
                         {
-                            Notify (\_SB.PCI0.GFX0.DD1F, 0x87)
+                            Notify (\_SB.PCI0.IGPU.DD1F, 0x87)
                         }
                         Else
                         {
@@ -12497,7 +12497,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                     }
                     Else
                     {
-                        Notify (\_SB.PCI0.GFX0.DD1F, 0x86)
+                        Notify (\_SB.PCI0.IGPU.DD1F, 0x86)
                         Return (Zero)
                     }
                 }
@@ -12513,7 +12513,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                     }
                     Else
                     {
-                        Notify (\_SB.PCI0.GFX0.DD1F, 0x87)
+                        Notify (\_SB.PCI0.IGPU.DD1F, 0x87)
                         Return (Zero)
                     }
                 }
@@ -13165,7 +13165,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
             Name (_UID, One)  // _UID: Unique ID
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                Store (0x03, ^^^GFX0.CLID)
+                Store (0x03, ^^^IGPU.CLID)
                 Return (Zero)
             }
 

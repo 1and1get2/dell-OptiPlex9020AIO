@@ -37,10 +37,10 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
      * because the disassembler had to guess at the number of arguments
      * required for each:
      */
-    External (_SB_.PCI0.GFX0.IDAB, MethodObj)    // Warning: Unresolved method, guessing 0 arguments
+    External (_SB_.PCI0.IGPU.IDAB, MethodObj)    // Warning: Unresolved method, guessing 0 arguments
 
-    External (_SB_.PCI0.GFX0, DeviceObj)
-    External (_SB_.PCI0.GFX0.AINT, MethodObj)    // 2 Arguments
+    External (_SB_.PCI0.IGPU, DeviceObj)
+    External (_SB_.PCI0.IGPU.AINT, MethodObj)    // 2 Arguments
     External (_SB_.PCI0.LPCB.H_EC.LSTE, IntObj)
     External (_SB_.PCI0.PEG0.PEGP, DeviceObj)
     External (_SB_.PCI0.PEG0.PEGP.DD02, UnknownObj)
@@ -86,7 +86,7 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
         }
     }
 
-    Scope (\_SB.PCI0.GFX0)
+    Scope (\_SB.PCI0.IGPU)
     {
         OperationRegion (APXM, SystemMemory, AMDA, 0x00020400)
         Field (APXM, AnyAcc, NoLock, Preserve)
@@ -646,7 +646,7 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
         {
             CreateBitField (PSBR, Zero, PDSW)
             Store (One, PDSW)
-            Notify (\_SB.PCI0.GFX0, 0x81)
+            Notify (\_SB.PCI0.IGPU, 0x81)
         }
 
         Method (AFN4, 1, Serialized)
@@ -659,7 +659,7 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
             {
                 CreateBitField (PSBR, 0x04, PSPS)
                 Store (One, PSPS)
-                Notify (\_SB.PCI0.GFX0, 0x81)
+                Notify (\_SB.PCI0.IGPU, 0x81)
             }
         }
 
@@ -667,14 +667,14 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
         {
             CreateBitField (PSBR, 0x05, PDCC)
             Store (One, PDCC)
-            Notify (\_SB.PCI0.GFX0, 0x81)
+            Notify (\_SB.PCI0.IGPU, 0x81)
         }
 
         Method (AFN6, 0, Serialized)
         {
             CreateBitField (PSBR, 0x06, PXPS)
             Store (One, PXPS)
-            Notify (\_SB.PCI0.GFX0, 0x81)
+            Notify (\_SB.PCI0.IGPU, 0x81)
         }
 
         Method (AFN7, 1, Serialized)
@@ -683,14 +683,14 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
             Store (One, PBRT)
             CreateByteField (ATIB, 0x0C, BRTL)
             Store (Arg0, BRTL)
-            Notify (\_SB.PCI0.GFX0, 0x81)
+            Notify (\_SB.PCI0.IGPU, 0x81)
         }
 
         Method (AFN8, 0, Serialized)
         {
             CreateBitField (PSBR, 0x08, DCSC)
             Store (One, DCSC)
-            Notify (\_SB.PCI0.GFX0, 0x81)
+            Notify (\_SB.PCI0.IGPU, 0x81)
         }
 
         Method (CTOI, 1, NotSerialized)
@@ -862,16 +862,16 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
 
     Method (IDAB, 0, Serialized)
     {
-        If (CondRefOf (\_SB.PCI0.GFX0.IDAB))
+        If (CondRefOf (\_SB.PCI0.IGPU.IDAB))
         {
-            \_SB.PCI0.GFX0.IDAB ()
+            \_SB.PCI0.IGPU.IDAB ()
         }
     }
 
     Method (HGAS, 0, NotSerialized)
     {
-        Store (One, \_SB.PCI0.GFX0.PXGS)
-        Notify (\_SB.PCI0.GFX0, 0x81)
+        Store (One, \_SB.PCI0.IGPU.PXGS)
+        Notify (\_SB.PCI0.IGPU, 0x81)
     }
 
     Method (HBRT, 1, Serialized)
@@ -892,25 +892,25 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
 
     Method (HPFS, 0, Serialized)
     {
-        If (LNotEqual (\_SB.PCI0.GFX0.GSTP, One))
+        If (LNotEqual (\_SB.PCI0.IGPU.GSTP, One))
         {
-            If (LEqual (\_SB.PCI0.GFX0.AGXA, Zero))
+            If (LEqual (\_SB.PCI0.IGPU.AGXA, Zero))
             {
-                \_SB.PCI0.GFX0.AINT (0x02, Zero)
+                \_SB.PCI0.IGPU.AINT (0x02, Zero)
             }
             Else
             {
-                Store (One, \_SB.PCI0.GFX0.EMDR)
-                If (LEqual (\_SB.PCI0.GFX0.EXPM, 0x02))
+                Store (One, \_SB.PCI0.IGPU.EMDR)
+                If (LEqual (\_SB.PCI0.IGPU.EXPM, 0x02))
                 {
-                    Store (Zero, \_SB.PCI0.GFX0.EXPM)
+                    Store (Zero, \_SB.PCI0.IGPU.EXPM)
                 }
                 Else
                 {
-                    Increment (\_SB.PCI0.GFX0.EXPM)
+                    Increment (\_SB.PCI0.IGPU.EXPM)
                 }
 
-                Notify (\_SB.PCI0.GFX0, 0x81)
+                Notify (\_SB.PCI0.IGPU, 0x81)
             }
         }
     }
@@ -923,24 +923,24 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
             Store (ToInteger (Arg0), _T_0)
             If (LEqual (_T_0, One))
             {
-                If (LNotEqual (\_SB.PCI0.GFX0.GSTP, One))
+                If (LNotEqual (\_SB.PCI0.IGPU.GSTP, One))
                 {
                     If (LEqual (SGMD, 0x02))
                     {
-                        If (LEqual (\_SB.PCI0.GFX0.AGXA, Zero))
+                        If (LEqual (\_SB.PCI0.IGPU.AGXA, Zero))
                         {
-                            Notify (\_SB.PCI0.GFX0, 0x80)
+                            Notify (\_SB.PCI0.IGPU, 0x80)
                         }
 
-                        If (LEqual (\_SB.PCI0.GFX0.AGXA, One))
+                        If (LEqual (\_SB.PCI0.IGPU.AGXA, One))
                         {
                             Notify (\_SB.PCI0.PEG0.PEGP, 0x80)
                         }
                     }
                     Else
                     {
-                        Store (One, \_SB.PCI0.GFX0.DSWR)
-                        Notify (\_SB.PCI0.GFX0, 0x81)
+                        Store (One, \_SB.PCI0.IGPU.DSWR)
+                        Notify (\_SB.PCI0.IGPU, 0x81)
                     }
                 }
             }
@@ -950,19 +950,19 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
                 {
                     If (LEqual (SGMD, 0x02))
                     {
-                        If (LEqual (\_SB.PCI0.GFX0.AGXA, Zero))
+                        If (LEqual (\_SB.PCI0.IGPU.AGXA, Zero))
                         {
-                            Notify (\_SB.PCI0.GFX0, 0x80)
+                            Notify (\_SB.PCI0.IGPU, 0x80)
                         }
 
-                        If (LEqual (\_SB.PCI0.GFX0.AGXA, One))
+                        If (LEqual (\_SB.PCI0.IGPU.AGXA, One))
                         {
                             Notify (\_SB.PCI0.PEG0.PEGP, 0x80)
                         }
                     }
                     Else
                     {
-                        Notify (\_SB.PCI0.GFX0, 0x80)
+                        Notify (\_SB.PCI0.IGPU, 0x80)
                     }
                 }
                 Else
@@ -971,24 +971,24 @@ DefinitionBlock ("SSDT7.aml", "SSDT", 1, "AmdRef", "AmdTabl", 0x00001000)
                     {
                         If (LEqual (SGMD, 0x02))
                         {
-                            If (LEqual (\_SB.PCI0.GFX0.AGXA, Zero))
+                            If (LEqual (\_SB.PCI0.IGPU.AGXA, Zero))
                             {
-                                Notify (\_SB.PCI0.GFX0, 0x80)
+                                Notify (\_SB.PCI0.IGPU, 0x80)
                             }
 
-                            If (LEqual (\_SB.PCI0.GFX0.AGXA, One))
+                            If (LEqual (\_SB.PCI0.IGPU.AGXA, One))
                             {
                                 Notify (\_SB.PCI0.PEG0.PEGP, 0x80)
                             }
                         }
                         Else
                         {
-                            Notify (\_SB.PCI0.GFX0, 0x80)
+                            Notify (\_SB.PCI0.IGPU, 0x80)
                         }
                     }
                     Else
                     {
-                        Notify (\_SB.PCI0.GFX0, 0x80)
+                        Notify (\_SB.PCI0.IGPU, 0x80)
                     }
                 }
             }
