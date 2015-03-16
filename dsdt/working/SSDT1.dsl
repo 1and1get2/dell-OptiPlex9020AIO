@@ -55,7 +55,7 @@ DefinitionBlock ("SSDT1.aml", "SSDT", 1, "PmRef", "Cpu0Ist", 0x00003000)
                 })
             }
         }
-
+/*
         Name (_PSS, Package (0x10)  // _PSS: Performance Supported States
         {
             Package (0x06)
@@ -377,7 +377,7 @@ DefinitionBlock ("SSDT1.aml", "SSDT", 1, "PmRef", "Cpu0Ist", 0x00003000)
             0x80000000, 
             0x80000000
         }
-
+*/
         Name (PSDF, Zero)
         Method (_PSD, 0, NotSerialized)  // _PSD: Power State Dependencies
         {
