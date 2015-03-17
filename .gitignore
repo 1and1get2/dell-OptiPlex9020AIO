@@ -1,4 +1,4 @@
-/build/*.aml
+build/*.aml
 .gradle
 /local.properties
 /.idea
