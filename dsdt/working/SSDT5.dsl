@@ -895,6 +895,37 @@ DefinitionBlock ("SSDT5.aml", "SSDT", 1, "SaSsdt", "SaSsdt ", 0x00003000)
                     Return (Package (0x00) {})
                 }
             }
+            Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+            {
+                If (LEqual (Arg2, Zero))
+                {
+                    Return (Buffer (One)
+                    {
+                         0x03                                           
+                    })
+                }
+
+                Return (Package (0x06)
+                {
+                    "device-id", 
+                    Buffer (0x04)
+                    {
+                         0x12, 0x04, 0x00, 0x00                         
+                    }, 
+
+                    "AAPL,ig-platform-id", 
+                    Buffer (0x04)
+                    {
+                         0x0A, 0x00, 0x26, 0x0A                         
+                    }, 
+
+                    "hda-gfx", 
+                    Buffer (0x0A)
+                    {
+                        "onboard-1"
+                    }
+                })
+            }
 
             Method (_DOS, 1, NotSerialized)  // _DOS: Disable Output Switching
             {

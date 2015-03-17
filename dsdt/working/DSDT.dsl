@@ -3921,6 +3921,37 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                 {
                     Return (GPRW (0x08, 0x03))
                 }
+                Method (_DSM, 4, NotSerialized)
+                {
+                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                    Return (Package()
+                    {
+                        "compatible", "pci8086,9c43",
+                    })
+                }
+                /*
+                Method (_DSM, 4, NotSerialized)
+                {
+                    Return (Package (0x06)
+                    {
+                        "device-id",
+                        Buffer (0x04){
+                            0x18, 0x3A, 0x00, 0x00
+                        },
+                        "name",
+                        Buffer (0x0D)
+                        {
+                            "pci8086,3a18"
+                        },
+                        "compatible",
+                        Buffer (0x0D)
+                        {
+                            "pci8086,3a18"
+                        }
+                    })
+                }
+                */
+                
             }
 
             Device (RP01)
@@ -4691,6 +4722,19 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000014)
                     }
 
                     Return (PR06 ())
+                }
+                Device (LAN0)
+                {
+                    Name (_ADR, Zero)
+                    Method (_DSM, 4, NotSerialized)
+                    {
+                        Store (Package (0x04) {
+                            "built-in", Buffer (One) {0x01},
+                            "location", Buffer (0x02) {"1"}
+                        }, Local0)
+                        DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))
+                        Return (Local0)
+                    }
                 }
             }
 
